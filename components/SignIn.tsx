@@ -2,14 +2,11 @@ import React from 'react';
 import { View, TextInput, Pressable, Text, StyleSheet } from 'react-native';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import useSignIn from '../hooks/useSignIn';
 
 const validationSchema = yup.object().shape({
-  username: yup
-    .string()
-    .required('Username is required'),
-  password: yup
-    .string()
-    .required('Password is required'),
+  username: yup.string().required('Username is required'),
+  password: yup.string().required('Password is required'),
 });
 
 const styles = StyleSheet.create({
@@ -55,24 +52,28 @@ const styles = StyleSheet.create({
   },
 });
 
-const initialValues = {
-  username: '',
-  password: '',
-};
+const initialValues = { username: '', password: '' };
 
 const SignIn = () => {
+  const [signIn] = useSignIn();
+
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      const { username, password } = values;
+      try {
+        const { data } = await signIn({ username, password });
+        console.log(data); // log access token
+      } catch (e) {
+        console.log(e);
+      }
     },
   });
 
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        {/* Username */}
         <TextInput
           style={[
             styles.input,
@@ -91,7 +92,6 @@ const SignIn = () => {
           <Text style={styles.errorText}>{formik.errors.username}</Text>
         )}
 
-        {/* Password */}
         <TextInput
           style={[
             styles.input,
@@ -111,7 +111,6 @@ const SignIn = () => {
           <Text style={styles.errorText}>{formik.errors.password}</Text>
         )}
 
-        {/* Button */}
         <Pressable style={styles.button} onPress={() => formik.handleSubmit()}>
           <Text style={styles.buttonText}>Sign in</Text>
         </Pressable>
