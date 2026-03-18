@@ -51,3 +51,32 @@ export const Fonts = Platform.select({
     mono: "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
   },
 });
+
+const theme = {
+  colors: {
+    textPrimary: '#24292e',
+    textSecondary: '#586069',
+    primary: '#0366d6',
+    error: '#d73a4a',
+    appBar: '#24292e',
+    mainBackground: '#e1e4e8',
+    white: 'white',
+  },
+  fontSizes: {
+    body: 14,
+    subheading: 16,
+  },
+  fonts: {
+    main: Platform.select({
+      android: 'Roboto',
+      ios: 'Arial',
+      default: 'System',
+    }),
+  },
+  fontWeights: {
+    normal: '400' as const,
+    bold: '700' as const,
+  },
+};
+
+export default theme;

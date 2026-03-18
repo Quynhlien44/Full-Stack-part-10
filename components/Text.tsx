@@ -1,20 +1,26 @@
 import React from 'react';
 import { Text as NativeText, StyleSheet, TextStyle } from 'react-native';
+import theme from '../constants/theme';
 
 type Props = {
-  style?: TextStyle;
+  style?: TextStyle | TextStyle[];
   children: React.ReactNode;
-};
-
-const Text: React.FC<Props> = ({ style, children }) => {
-  return <NativeText style={[styles.base, style]}>{children}</NativeText>;
 };
 
 const styles = StyleSheet.create({
   base: {
-    fontSize: 14,
-    color: '#24292e',
+    fontSize: theme.fontSizes.body,
+    color: theme.colors.textPrimary,
+    fontFamily: theme.fonts.main ?? undefined, 
   },
 });
+
+const Text: React.FC<Props> = ({ style, children }) => {
+  return (
+    <NativeText style={[styles.base, style]}>
+      {children}
+    </NativeText>
+  );
+};
 
 export default Text;
