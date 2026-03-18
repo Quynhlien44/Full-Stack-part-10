@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
 
 const RepositoryItem: React.FC<Props> = ({ item }) => {
   return (
-    <View style={styles.container}>
+    <View testID="repositoryItem" style={styles.container}>  {/* <-- thêm testID vào đây */}
       <View style={styles.topRow}>
         <Image source={{ uri: item.ownerAvatarUrl }} style={styles.avatar} />
         <View style={styles.info}>
@@ -91,32 +91,25 @@ const RepositoryItem: React.FC<Props> = ({ item }) => {
 
       <View style={styles.statsRow}>
         <View style={styles.statItem}>
-          <Text style={styles.statValue}>
-            {formatCount(item.stargazersCount)}
-          </Text>
+          <Text style={styles.statValue}>{formatCount(item.stargazersCount)}</Text>
           <Text style={styles.statLabel}>Stars</Text>
         </View>
         <View style={styles.statItem}>
-          <Text style={styles.statValue}>
-            {formatCount(item.forksCount)}
-          </Text>
+          <Text style={styles.statValue}>{formatCount(item.forksCount)}</Text>
           <Text style={styles.statLabel}>Forks</Text>
         </View>
         <View style={styles.statItem}>
-          <Text style={styles.statValue}>
-            {formatCount(item.reviewCount)}
-          </Text>
+          <Text style={styles.statValue}>{formatCount(item.reviewCount)}</Text>
           <Text style={styles.statLabel}>Reviews</Text>
         </View>
         <View style={styles.statItem}>
-          <Text style={styles.statValue}>
-            {formatCount(item.ratingAverage)}
-          </Text>
+          <Text style={styles.statValue}>{formatCount(item.ratingAverage)}</Text>
           <Text style={styles.statLabel}>Rating</Text>
         </View>
       </View>
     </View>
   );
 };
+
 
 export default RepositoryItem;
