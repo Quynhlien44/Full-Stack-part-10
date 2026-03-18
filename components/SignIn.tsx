@@ -2,6 +2,7 @@ import React from 'react';
 import { View, TextInput, Pressable, Text, StyleSheet } from 'react-native';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useRouter } from 'expo-router';
 import useSignIn from '../hooks/useSignIn';
 
 const validationSchema = yup.object().shape({
@@ -56,6 +57,7 @@ const initialValues = { username: '', password: '' };
 
 const SignIn = () => {
   const [signIn] = useSignIn();
+  const router = useRouter();
 
   const formik = useFormik({
     initialValues,
@@ -63,8 +65,9 @@ const SignIn = () => {
     onSubmit: async (values) => {
       const { username, password } = values;
       try {
-        const { data } = await signIn({ username, password });
-        console.log(data); // log access token
+        await signIn({ username, password });
+        // Redirect về trang Repositories sau khi đăng nhập
+        router.replace('/');
       } catch (e) {
         console.log(e);
       }

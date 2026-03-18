@@ -2,8 +2,11 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { ApolloProvider } from '@apollo/client';
 import createApolloClient from '../utils/apolloClient';
+import AuthStorage from '../utils/authStorage';
+import AuthStorageContext from '../contexts/AuthStorageContext';
 
-const apolloClient = createApolloClient();
+const authStorage = new AuthStorage();
+const apolloClient = createApolloClient(authStorage);
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -12,12 +15,14 @@ export const unstable_settings = {
 export default function RootLayout() {
   return (
     <ApolloProvider client={apolloClient}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="sign-in" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
+      <AuthStorageContext.Provider value={authStorage}>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="sign-in" options={{ headerShown: false }} />
+          <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+        </Stack>
+        <StatusBar style="auto" />
+      </AuthStorageContext.Provider>
     </ApolloProvider>
   );
 }
